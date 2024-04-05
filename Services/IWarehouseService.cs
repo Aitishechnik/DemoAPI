@@ -6,8 +6,8 @@ namespace DemoAPI.Services
         protected Warehouse warehouse { get; }
         List<Item> CheckItemsInStock();
         Item GetItemByID(long id);
-        void AddNewItem(string name, string category, string description);
-        bool AddNewItemWithID(long id, string name, string category, string description);
+        bool AddNewItem(ParamsForItem paramsForItem);
+        bool AddNewItemWithID(ParamsForItemWithID paramsForItemWithID);
         bool RemoveItem(long id);
         bool SetQuantity(long id, int quantity);
         bool SetCost(long id, int cost);

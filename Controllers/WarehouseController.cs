@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DemoAPI.Services;
+using DemoAPI.Models;
 namespace DemoAPI.Controllers
 {
     [ApiController]
@@ -34,17 +35,19 @@ namespace DemoAPI.Controllers
 
         [HttpPost]
         [Route("SetNewPosition")]
-        public IActionResult SetNewPosition(string name, string category, string description)
+        public IActionResult SetNewPosition([FromBody]ParamsForItem paramsForItem)
         {
-            warehouseService.AddNewItem(name, category, description);
+            if(warehouseService.AddNewItem(paramsForItem))
             return Ok();
+
+            return BadRequest("Invalid params");
         }
 
         [HttpPost]
         [Route("SetNewPositionWithID")]
-        public IActionResult SetNewPositionWithID(long id, string name, string category, string description)
+        public IActionResult SetNewPositionWithID([FromBody]ParamsForItemWithID paramsForItemWithID)
         {
-            if (warehouseService.AddNewItemWithID(id, name, category, description))
+            if (warehouseService.AddNewItemWithID(paramsForItemWithID))
                 return Ok();
 
             return BadRequest();

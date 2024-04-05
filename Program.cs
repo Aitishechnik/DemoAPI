@@ -14,6 +14,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IExtraService, ExtraService>();
 builder.Services.AddSingleton<Warehouse>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+builder.Services.AddTransient<ParamsForItem>();
+builder.Services.AddTransient<ParamsForItemWithID>();
+builder.Services.AddSingleton<Garage>();
+builder.Services.AddTransient<IGarageService, GarageService>();
+builder.Services.AddTransient<ParamsForAuto>();
+
 
 var app = builder.Build();
 

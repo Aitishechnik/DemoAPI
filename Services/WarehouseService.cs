@@ -12,15 +12,18 @@ namespace DemoAPI.Services
             this.warehouse = warehouse;
         }
 
-        public void AddNewItem(string name, string category, string description)
+        public bool AddNewItem(ParamsForItem paramsForItem)
         {
+            if(!paramsForItem.CheckParams())
+                return false;
             while(warehouse.Stock.ContainsKey(Item.GetGlobalIdIndex()))
             {
                 Item.RaiseGlobalIdIndex();
             }
 
-            var item = new Item(name, category, description);
+            var item = new Item(paramsForItem);
             warehouse.Stock.Add(item.Id, item);
+            return true;
         }
 
         public Item GetItemByID(long id)
@@ -81,12 +84,15 @@ namespace DemoAPI.Services
             else { return false; }
         }
 
-        public bool AddNewItemWithID(long id, string name, string category, string description)
+        public bool AddNewItemWithID(ParamsForItemWithID paramsForItemWithID)
         {
-            if (!warehouse.Stock.ContainsKey(id))
+            if(!paramsForItemWithID.CheckParams())
+                return false;
+
+            if (!warehouse.Stock.ContainsKey((long)paramsForItemWithID.Id))
             {
-                var item = new Item(id, name, description, category);
-                warehouse.Stock.Add(id, item);
+                var item = new Item(paramsForItemWithID);
+                warehouse.Stock.Add((long)paramsForItemWithID.Id, item);
                 return true;
             }
 
