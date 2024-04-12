@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
-using System.Text.Json;
-using static DemoAPI.Models.ParamsForAuto;
+using DemoAPI.Utilities;
 using System;
 
 namespace DemoAPI.Models
@@ -32,7 +31,7 @@ namespace DemoAPI.Models
         }
     }
 
-    public class ParamsForAuto()
+    public partial class ParamsForAuto()
     {
         public Dictionary<string, string> Test { get; set; } = [];
         [DefaultValue(null)]
@@ -57,19 +56,6 @@ namespace DemoAPI.Models
             }
 
             return true;
-        }
-
-        public class EnumStringConverter<T> : JsonConverter<T> where T : struct, Enum
-        {
-            public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                return Enum.Parse<T>(reader.GetString(), ignoreCase: true);
-            }
-
-            public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-            {
-                writer.WriteStringValue(value.ToString());
-            }
         }
     }
 }
