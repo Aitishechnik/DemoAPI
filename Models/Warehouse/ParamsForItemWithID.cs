@@ -1,0 +1,26 @@
+﻿using System.ComponentModel;
+
+namespace DemoAPI.Models
+{
+    public class ParamsForItemWithID()
+    {
+        [DefaultValue(null)]
+        public long? Id { get; set; }
+        [DefaultValue("")]
+        public string? Name { get; set; }
+        [DefaultValue(null)]
+        public int? Category { get; set; }
+        [DefaultValue("")]
+        public string? Description { get; set; }
+
+        public bool CheckParams()
+        {
+            if (Id == null ||
+                string.IsNullOrEmpty(Name) ||
+                Category == null ||
+                string.IsNullOrEmpty(Description))
+                return false;
+            return true;
+        }
+    }
+}

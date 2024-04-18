@@ -3,7 +3,6 @@ namespace DemoAPI.Services
 {
     public interface IWarehouseService
     {
-        protected Warehouse warehouse { get; }
         List<Item> CheckItemsInStock();
         Item GetItemByID(long id);
         bool AddNewItem(ParamsForItem paramsForItem);

@@ -14,14 +14,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IExtraService, ExtraService>();
 builder.Services.AddSingleton<Warehouse>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
-builder.Services.AddTransient<ParamsForItem>();
-builder.Services.AddTransient<ParamsForItemWithID>();
 builder.Services.AddSingleton<Garage>();
 builder.Services.AddScoped<IGarageService, GarageService>();
-builder.Services.AddTransient<ParamsForAuto>();
 builder.Services.AddScoped<IUserLogService, UserLogService>();
 builder.Services.AddSingleton<UserLog>();
-builder.Services.AddTransient<UserParams>();
 
 
 var app = builder.Build();

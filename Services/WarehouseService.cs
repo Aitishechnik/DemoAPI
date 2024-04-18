@@ -5,7 +5,7 @@ namespace DemoAPI.Services
 {
     public class WarehouseService : IWarehouseService
     {
-        public Warehouse warehouse { get; }
+        private Warehouse warehouse;
 
         public WarehouseService(Warehouse warehouse)
         {

@@ -4,7 +4,7 @@ namespace DemoAPI.Services
 {
     public class GarageService : IGarageService
     {
-        public Garage Garage { get; }
+        private Garage Garage { get; }
 
         public GarageService(Garage garage)
         {

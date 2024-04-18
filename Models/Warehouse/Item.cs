@@ -2,12 +2,6 @@
 
 namespace DemoAPI.Models
 {
-    public class Warehouse
-    {
-        public Dictionary<long, Item> Stock { get; set; } = [];
-
-    }
-
     public class Item
     {
         private static long globalIdIndex = 1;
@@ -68,47 +62,6 @@ namespace DemoAPI.Models
         public void SetPrice(int price)
         {
             Price = price;
-        }
-    }
-
-    public class ParamsForItem()
-    {
-        [DefaultValue("")]
-        public string? Name { get; set; }
-        [DefaultValue(null)]
-        public int? Category { get; set; }
-        [DefaultValue("")]
-        public string? Description { get; set; }
-
-        public bool CheckParams()
-        {
-            if(string.IsNullOrEmpty(Name) ||
-                Category == null ||
-                string.IsNullOrEmpty(Description))
-                return false;
-            return true;
-        }
-    }
-
-    public class ParamsForItemWithID()
-    {
-        [DefaultValue(null)]
-        public long? Id { get; set; }
-        [DefaultValue("")]
-        public string? Name { get; set; }
-        [DefaultValue(null)]
-        public int? Category { get; set; }
-        [DefaultValue("")]
-        public string? Description { get; set; }
-
-        public bool CheckParams()
-        {
-            if (Id == null ||
-                string.IsNullOrEmpty(Name) ||
-                Category == null ||
-                string.IsNullOrEmpty(Description))
-                return false;
-            return true;
         }
     }
 }

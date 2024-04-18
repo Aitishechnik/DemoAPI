@@ -14,16 +14,14 @@ namespace DemoAPI.Controllers
             this.warehouseService = warehouseService;
         }
 
-        [HttpGet]
-        [Route("CheckPositionsInStock")]
+        [HttpGet("CheckPositionsInStock")]
         public IActionResult CheckPositionsInStock()
         {
             return Ok(warehouseService.CheckItemsInStock());
         }
 
-        [HttpGet]
-        [Route("GetItem")]
-        public IActionResult GetItem(long id)
+        [HttpGet("GetItem")]
+        public IActionResult GetItem([FromHeader]long id)
         {
             var item = warehouseService.GetItemByID(id);
             if (item != null)
@@ -33,8 +31,7 @@ namespace DemoAPI.Controllers
         }
 
 
-        [HttpPost]
-        [Route("SetNewPosition")]
+        [HttpPost("SetNewPosition")]
         public IActionResult SetNewPosition([FromBody]ParamsForItem paramsForItem)
         {
             if(warehouseService.AddNewItem(paramsForItem))
@@ -43,8 +40,7 @@ namespace DemoAPI.Controllers
             return BadRequest("Invalid params");
         }
 
-        [HttpPost]
-        [Route("SetNewPositionWithID")]
+        [HttpPost("SetNewPositionWithID")]
         public IActionResult SetNewPositionWithID([FromBody]ParamsForItemWithID paramsForItemWithID)
         {
             if (warehouseService.AddNewItemWithID(paramsForItemWithID))
