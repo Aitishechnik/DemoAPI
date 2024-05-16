@@ -7,7 +7,7 @@
         public string? Model { get; set; }
         public int? HorsePower { get; set; }
         public EngineType? EngineType { get; set; }
-        public Dictionary<string, string> Test { get; set; } = [];
+        public Dictionary<string, string> Test { get; set; } = new Dictionary<string, string>();
 
         public Auto(ParamsForAuto paramsForAuto)
         {

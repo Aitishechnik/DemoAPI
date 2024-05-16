@@ -1,5 +1,6 @@
 ﻿using DemoAPI.Models;
 using DemoAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoAPI.Controllers
@@ -15,15 +16,15 @@ namespace DemoAPI.Controllers
             this.garageService = garageService;
         }
 
-        [HttpGet]
-        [Route("CheckAutoPark")]
+        [Authorize]
+        [HttpGet("CheckAutoPark")]
         public IActionResult CheckAutoPark()
         {
             return Ok(garageService.CheckAutoPark());
         }
 
-        [HttpPost]
-        [Route("AddNewCar")]
+        [Authorize]
+        [HttpPost("AddNewCar")]
         public IActionResult AddNewCar([FromBody]ParamsForAuto paramsForAuto)
         {
             if (garageService.AddNewCar(paramsForAuto))

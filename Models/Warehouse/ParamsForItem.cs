@@ -2,7 +2,7 @@
 
 namespace DemoAPI.Models
 {
-    public class ParamsForItem()
+    public class ParamsForItem
     {
         [DefaultValue("")]
         public string? Name { get; set; }

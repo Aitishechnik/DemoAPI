@@ -2,9 +2,9 @@
 
 namespace DemoAPI.Models
 {
-    public class ParamsForAuto()
+    public class ParamsForAuto
     {
-        public Dictionary<string, string> Test { get; set; } = [];
+        public Dictionary<string, string> Test { get; set; } = new Dictionary<string, string>();
         [DefaultValue(null)]
         public long? Id { get; set; }
         [DefaultValue("")]

@@ -2,7 +2,7 @@
 
 namespace DemoAPI.Models
 {
-    public class ParamsForItemWithID()
+    public class ParamsForItemWithID
     {
         [DefaultValue(null)]
         public long? Id { get; set; }

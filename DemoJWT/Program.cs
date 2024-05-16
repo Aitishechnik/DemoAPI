@@ -53,12 +53,12 @@ builder.Services.AddAuthorization(options => options.DefaultPolicy =
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
     .AddEntityFrameworkStores<DataContext>()
     .AddUserManager<UserManager<ApplicationUser>>()
-    .AddRoleManager<IdentityRole<long>>()
+    //.AddRoleManager<IdentityRole<long>>()
     .AddSignInManager<SignInManager<ApplicationUser>>();
 
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "DemoJwc", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "DemoJWT", Version = "v1" });
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
