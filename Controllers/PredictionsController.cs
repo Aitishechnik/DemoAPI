@@ -1,7 +1,6 @@
 ﻿using DemoAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using DemoAPI.Models;
-using Microsoft.Extensions.Logging;
 
 namespace DemoAPI.Controllers
 {

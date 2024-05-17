@@ -1,10 +1,5 @@
-using DemoAPI;
-using DemoAPI.Controllers;
 using DemoAPI.Services;
 using DemoAPI.Models;
-using DemoJWT.Data.Entities;
-using DemoJWT.Data;
-using DemoJWT.Services.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,38 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
-/*var builder = WebApplication.CreateBuilder(args);
-
-
-builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IExtraService, ExtraService>();
-builder.Services.AddSingleton<Warehouse>();
-builder.Services.AddScoped<IWarehouseService, WarehouseService>();
-builder.Services.AddSingleton<Garage>();
-builder.Services.AddScoped<IGarageService, GarageService>();
-builder.Services.AddScoped<IUserLogService, UserLogService>();
-builder.Services.AddSingleton<UserLog>();
-
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();*/
+using DemoAPI.Data;
+using DemoAPI.Data.Entities;
+using DemoAPI.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,7 +56,6 @@ builder.Services.AddAuthorization(options => options.DefaultPolicy =
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
     .AddEntityFrameworkStores<DataContext>()
     .AddUserManager<UserManager<ApplicationUser>>()
-    //.AddRoleManager<IdentityRole<long>>()
     .AddSignInManager<SignInManager<ApplicationUser>>();
 
 builder.Services.AddSwaggerGen(option =>

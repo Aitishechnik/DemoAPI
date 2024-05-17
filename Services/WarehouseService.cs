@@ -1,5 +1,4 @@
 ﻿using DemoAPI.Models;
-using Microsoft.Extensions.Hosting;
 
 namespace DemoAPI.Services
 {
