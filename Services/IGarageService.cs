@@ -1,10 +1,12 @@
-﻿using DemoAPI.Models;
+﻿using DemoAPI.Data.Entities;
+using DemoAPI.Models;
 using Microsoft.AspNetCore.Components.Web;
 namespace DemoAPI.Services
 {
     public interface IGarageService
     {
-        List<Auto> CheckAutoPark();
-        bool AddNewCar(ParamsForAuto paramsForAuto);
+        Task<long> AddNewCar(ParamsForAuto paramsForAuto);
+        Task<List<AutoEntity>> GetAutoPark();
+        Task<long> AddGarage(string name);
     }
 }

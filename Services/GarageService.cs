@@ -1,32 +1,52 @@
-﻿using DemoAPI.Models;
+﻿using DemoAPI.Data;
+using DemoAPI.Data.Entities;
+using DemoAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoAPI.Services
 {
     public class GarageService : IGarageService
     {
-        private Garage Garage { get; }
+        private readonly DataContext _context;
 
-        public GarageService(Garage garage)
+        public GarageService(DataContext context)
         {
-            Garage = garage;
+            _context = context;
         }
-        public bool AddNewCar(ParamsForAuto paramsForAuto)
+
+        public async Task<long> AddNewCar(ParamsForAuto paramsForAuto)
         {
-            if (paramsForAuto.CheckParams())
+            var car = new AutoEntity
             {
-                if(Garage.CarPark.ContainsKey((long)paramsForAuto.Id))
-                    return false;
-                var auto = new Auto(paramsForAuto);
-                Garage.CarPark.Add(auto.Id, auto);
-                return true;
-            }
+                EngineType = paramsForAuto.EngineType,
+                HorsePower = paramsForAuto.HorsePower,
+                Brand = paramsForAuto.Brand,
+                GarageId = paramsForAuto.GarageId,
+                Model = paramsForAuto.Model
+            };
 
-            return false;
+            var entity = await _context.Cars.AddAsync(car);
+            await _context.SaveChangesAsync();
+
+            return entity.Entity.Id;
         }
 
-        public List<Auto> CheckAutoPark()
+        public async Task<long> AddGarage(string name)
         {
-            return Garage.CarPark.Values.ToList();
+            var garage = new GarageEntity
+            {
+                Name = name
+            };
+
+            var entity = await _context.Garages.AddAsync(garage);
+            await _context.SaveChangesAsync();
+
+            return entity.Entity.Id;
+        }
+
+        public async Task<List<AutoEntity>> GetAutoPark()
+        {
+            return await _context.Cars.ToListAsync();
         }
     }
 }
