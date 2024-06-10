@@ -7,7 +7,4 @@ Logs
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
 CsharpMainProject.sln
-.vs/DemoAPI/FileContentIndex/0c24fb3a-a33e-4c0b-a56a-ec38b5d22be3.vsidx
-.vs/DemoAPI/FileContentIndex/1d466484-9548-441b-bd44-9b21ffff7eae.vsidx
-.vs/DemoAPI/FileContentIndex/78a30537-d2d9-415e-8b27-28c46e3c2d2b.vsidx
-.vs/DemoAPI/FileContentIndex/fbb26122-f1ee-4f80-9c65-49d7138eb13f.vsidx
+*.vsidx
