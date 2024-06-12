@@ -159,6 +159,60 @@ namespace DemoAPI.Migrations
                     b.ToTable("Garages");
                 });
 
+            modelBuilder.Entity("DemoAPI.Data.Entities.UserEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LName")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Rate")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("UserLogID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserLogName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsersCustom");
+                });
+
+            modelBuilder.Entity("DemoAPI.Data.Entities.UserLogEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLogs");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
                     b.Property<long>("Id")

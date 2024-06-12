@@ -4,7 +4,6 @@ namespace DemoAPI.Data.Entities
 {
     public class AutoEntity : BaseEntity
     {
-        public long Id { get; set; }
         public string? Brand { get; set; }
         public string? Model { get; set; }
         public int? HorsePower { get; set; }

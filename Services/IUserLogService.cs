@@ -1,11 +1,15 @@
-﻿using DemoAPI.Models;
+﻿using DemoAPI.Data.Entities;
+using DemoAPI.Models;
+using System.Diagnostics.Eventing.Reader;
+
 namespace DemoAPI.Services
 {
     public interface IUserLogService
     {
-        List<User> ShowUserList();
-        bool AddNewUser(UserParams userParams);
-        bool UpdateUserInfo(long id, User user);
-        bool DeleteUser(long id);
+        Task<List<UserEntity>> ShowUserList();
+        Task<bool> AddNewUser(UserParams userParams);
+        Task<bool> UpdateUserInfo(long id, UserParams userUpdateInfo);
+        Task<bool> DeleteUser(long id);
+        Task<bool> AddNewUserLog(string name);
     }
 }
