@@ -31,7 +31,7 @@ namespace DemoAPI.Controllers
             _roleManager = roleManager;
         }
 
-        [Authorize(Roles = RoleConsts.Moderator, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = RoleConsts.Moderator)]//, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("AddUserRole")]
         public async Task<IActionResult> AddUserRole(long userId, string newRoleName)
         {

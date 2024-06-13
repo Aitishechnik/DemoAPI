@@ -50,6 +50,7 @@ builder.Services.AddAuthentication(opt => {
 builder.Services.AddAuthorization(options => options.DefaultPolicy =
     new AuthorizationPolicyBuilder
             (JwtBearerDefaults.AuthenticationScheme)
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
         .RequireAuthenticatedUser()
         .Build());
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
