@@ -26,10 +26,9 @@ builder.Services.AddCors(c => c.AddPolicy("cors", opt =>
 builder.Services.AddSingleton<IExtraService, ExtraService>();
 builder.Services.AddSingleton<Warehouse>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
-builder.Services.AddSingleton<Garage>();
 builder.Services.AddScoped<IGarageService, GarageService>();
 builder.Services.AddScoped<IUserLogService, UserLogService>();
-builder.Services.AddSingleton<UserLog>();
+builder.Services.AddSingleton<UserLogEntity>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddAuthentication(opt => {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

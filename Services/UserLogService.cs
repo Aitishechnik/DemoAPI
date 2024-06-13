@@ -1,47 +1,90 @@
-﻿using DemoAPI.Models;
+﻿using DemoAPI.Data;
+using DemoAPI.Data.Entities;
+using DemoAPI.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace DemoAPI.Services
 {
     public class UserLogService : IUserLogService
     {
-        private UserLog userLog;
+        private DataContext _context;
 
-        public UserLogService(UserLog userLog)
+        public UserLogService(DataContext context)
         {
-            this.userLog = userLog;
+            _context = context;
         }
 
-        public bool AddNewUser(UserParams userParams)
+        public async Task<bool> AddNewUser(UserParams userParams)
         {
-            if (!userLog.Users.ContainsKey(userParams.ID))
+            var user = await _context.UsersCustom.FirstOrDefaultAsync(u => u.Id == userParams.ID);
+            if (user is null)
             {
-                var user = new User(userParams);
-                userLog.Users.Add(userParams.ID, user);
+                var newUser = new UserEntity(userParams);
+
+                var log = await _context.UserLogs.FirstOrDefaultAsync(l => l.Id == userParams.UserLogID);
+
+                if (log is null)
+                {
+                    return false;
+                }
+                newUser.UserLogName = log.Name;
+                await _context.UsersCustom.AddAsync(newUser);
+                await _context.SaveChangesAsync();
+
                 return true;
             }
 
             return false;
         }
 
-        public bool DeleteUser(long id)
+        public async Task<bool> AddNewUserLog(string name)
         {
-            if (userLog.Users.ContainsKey(id))
+            if (await _context.UserLogs.FirstOrDefaultAsync(user => user.Name == name) == null)
             {
-                userLog.Users.Remove(id);
+                var newLog = new UserLogEntity
+                {
+                    Name = name
+                };
+
+                _context.UserLogs.Add(newLog);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeleteUser(long id)
+        {
+            var user = await _context.UsersCustom.FindAsync(id);
+            if (user != null)
+            {
+                _context.UsersCustom.Remove(user);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public List<User> ShowUserList()
+        public async Task<List<UserEntity>> ShowUserList()
         {
-            return userLog.Users.Values.ToList();
+            return await _context.UsersCustom.ToListAsync();
         }
 
-        public bool UpdateUserInfo(long id, User user)
+        public async Task<bool> UpdateUserInfo(long id, UserParams userUpdateInfo)
         {
-            if (userLog.Users.ContainsKey(id))
+            var log = await _context.UserLogs.FirstOrDefaultAsync(userLog => userLog.Id == userUpdateInfo.UserLogID);
+
+            if(log == null)
+                return false;
+
+            var user = await _context.UsersCustom.FirstOrDefaultAsync(user => user.Id == userUpdateInfo.ID);
+            if (user != null)
             {
-                userLog.Users[id] = user;
+                user.UpdateUser(userUpdateInfo);
+                user.UserLogName = log.Name;
+                _context.UsersCustom.Update(user);
+                await _context.SaveChangesAsync();
                 return true;
             }
 

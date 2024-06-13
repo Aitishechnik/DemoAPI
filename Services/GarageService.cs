@@ -22,8 +22,11 @@ namespace DemoAPI.Services
                 HorsePower = paramsForAuto.HorsePower,
                 Brand = paramsForAuto.Brand,
                 GarageId = paramsForAuto.GarageId,
-                Model = paramsForAuto.Model
+                Model = paramsForAuto.Model             
             };
+
+            if (car.GarageId == null!)
+                car.Garage = await _context.Garages.FindAsync(paramsForAuto.GarageId);
 
             var entity = await _context.Cars.AddAsync(car);
             await _context.SaveChangesAsync();

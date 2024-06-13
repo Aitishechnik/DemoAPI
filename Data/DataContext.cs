@@ -9,6 +9,8 @@ namespace DemoAPI.Data
     {
         public DbSet<AutoEntity> Cars { get; set; } = null!;
         public DbSet<GarageEntity> Garages { get; set; } = null!;
+        public DbSet<UserEntity> UsersCustom { get; set; } = null!;
+        public DbSet<UserLogEntity> UserLogs { get; set; } = null!;
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
