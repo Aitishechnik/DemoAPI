@@ -11,6 +11,7 @@ namespace DemoAPI.Data
         public DbSet<GarageEntity> Garages { get; set; } = null!;
         public DbSet<UserEntity> UsersCustom { get; set; } = null!;
         public DbSet<UserLogEntity> UserLogs { get; set; } = null!;
+        public DbSet<ItemEntity> Items { get; set; } = null!;
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
