@@ -1,15 +1,15 @@
-﻿using DemoAPI.Models;
+﻿using DemoAPI.Data.Entities;
+using DemoAPI.Models;
 namespace DemoAPI.Services
 {
     public interface IWarehouseService
     {
-        List<Item> CheckItemsInStock();
-        Item GetItemByID(long id);
-        bool AddNewItem(ParamsForItem paramsForItem);
-        bool AddNewItemWithID(ParamsForItemWithID paramsForItemWithID);
-        bool RemoveItem(long id);
-        bool SetQuantity(long id, int quantity);
-        bool SetCost(long id, int cost);
-        bool SetPrice(long id, int price);
+        Task <List<ItemEntity>> CheckItemsInStock();
+        Task <ItemEntity> GetItemByID(long id);
+        Task <bool> AddNewItem(ParamsForItem paramsForItem);
+        Task <bool> RemoveItem(long id);
+        Task <bool> SetQuantity(long id, int quantity);
+        Task <bool> SetCost(long id, int cost);
+        Task <bool> SetPrice(long id, int price);
     }
 }

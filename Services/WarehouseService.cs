@@ -1,100 +1,94 @@
-﻿using DemoAPI.Models;
+﻿using DemoAPI.Data;
+using DemoAPI.Data.Entities;
+using DemoAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoAPI.Services
 {
     public class WarehouseService : IWarehouseService
     {
-        private Warehouse warehouse;
+        private DataContext _dataContext;
 
-        public WarehouseService(Warehouse warehouse)
+        public WarehouseService(DataContext dataContext)
         {
-            this.warehouse = warehouse;
+            _dataContext = dataContext;
         }
 
-        public bool AddNewItem(ParamsForItem paramsForItem)
+        public async Task<bool> AddNewItem(ParamsForItem paramsForItem)
         {
-            if(!paramsForItem.CheckParams())
-                return false;
-            while(warehouse.Stock.ContainsKey(Item.GetGlobalIdIndex()))
+            if (await _dataContext.Items.FirstOrDefaultAsync(item => item.Id == paramsForItem.Id) == null)
             {
-                Item.RaiseGlobalIdIndex();
-            }
-
-            var item = new Item(paramsForItem);
-            warehouse.Stock.Add(item.Id, item);
-            return true;
-        }
-
-        public Item GetItemByID(long id)
-        {
-            if (warehouse.Stock.ContainsKey(id))
-                return warehouse.Stock[id];
-
-            return null;
-        }
-
-        public List<Item> CheckItemsInStock()
-        {
-            List<Item> items = new List<Item>();
-            foreach (var item in warehouse.Stock)
-            {
-                items.Add(item.Value);
-            }
-            return items;
-        }
-
-        public bool RemoveItem(long id)
-        {
-            if (warehouse.Stock.TryGetValue(id, out var item))
-            {
-                warehouse.Stock.Remove(id);
+                var newItem = new ItemEntity(paramsForItem);
+                await _dataContext.Items.AddAsync(newItem);
+                await _dataContext.SaveChangesAsync();
                 return true;
             }
-            else { return false; }
+            return false;
         }
 
-        public bool SetCost(long id, int cost)
+        public async Task<List<ItemEntity>> CheckItemsInStock()
         {
-            if (warehouse.Stock.TryGetValue(id, out var item))
+            return await _dataContext.Items.ToListAsync();
+        }
+
+        public async Task<ItemEntity> GetItemByID(long id)
+        {
+            return await _dataContext.Items.FirstOrDefaultAsync(item => item.Id == id);
+        }
+
+        public async Task<bool> RemoveItem(long id)
+        {
+            var item = await _dataContext.Items.FindAsync(id);
+            if (item != null)
+            {
+                _dataContext.Items.Remove(item);
+                await _dataContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> SetCost(long id, int cost)
+        {
+            var item = await _dataContext.Items.FindAsync(id);
+
+            if (item != null)
             {
                 item.SetCost(cost);
+                _dataContext.Items.Update(item);
+                await _dataContext.SaveChangesAsync();
                 return true;
             }
-            else { return false; }
+
+            return false;
         }
 
-        public bool SetPrice(long id, int price)
+        public async Task<bool> SetPrice(long id, int price)
         {
-            if (warehouse.Stock.TryGetValue(id, out var item))
+            var item = await _dataContext.Items.FindAsync(id);
+
+            if(item != null)
             {
-                item.SetPrice(price);
+                item.SetQuantity(price);
+                _dataContext.Items.Update(item);
+                await _dataContext.SaveChangesAsync();
                 return true;
             }
-            else { return false; }
+
+            return false;
         }
 
-        public bool SetQuantity(long id, int quantity)
+        public async Task<bool> SetQuantity(long id, int quantity)
         {
-            if(warehouse.Stock.TryGetValue(id, out var item))
+            var item = await _dataContext.Items.FindAsync(id);
+
+            if (item != null)
             {
                 item.SetQuantity(quantity);
+                _dataContext.Items.Update(item);
+                await _dataContext.SaveChangesAsync();
                 return true;
             }
-            else { return false; }
-        }
-
-        public bool AddNewItemWithID(ParamsForItemWithID paramsForItemWithID)
-        {
-            if(!paramsForItemWithID.CheckParams())
-                return false;
-
-            if (!warehouse.Stock.ContainsKey((long)paramsForItemWithID.Id))
-            {
-                var item = new Item(paramsForItemWithID);
-                warehouse.Stock.Add((long)paramsForItemWithID.Id, item);
-                return true;
-            }
-
             return false;
         }
     }

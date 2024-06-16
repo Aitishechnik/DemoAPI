@@ -24,7 +24,6 @@ builder.Services.AddCors(c => c.AddPolicy("cors", opt =>
     opt.WithOrigins(builder.Configuration.GetSection("Cors:Urls").Get<string[]>()!);
 }));
 builder.Services.AddSingleton<IExtraService, ExtraService>();
-builder.Services.AddSingleton<Warehouse>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 builder.Services.AddScoped<IGarageService, GarageService>();
 builder.Services.AddScoped<IUserLogService, UserLogService>();
